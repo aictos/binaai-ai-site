@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Join the Binaai Waitlist</title>
+  <meta name="description" content="Tell us what you want to build with Binaai and join the waitlist." />
+  <link rel="icon" href="assets/Binaai-logo-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Poppins', 'Inter', 'system-ui', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              sky: '#2DAAE1',
+              teal: '#5BC0DE',
+              red: '#E94B35',
+              gold: '#F5A623',
+              orange: '#F8C045',
+              black: '#000000'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-white text-gray-900">
+  <header class="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5">
+    <a href="index.html" class="flex items-center" aria-label="Binaai home">
+      <img src="assets/Binaai-logo-horizontal-tagline.png" alt="Binaai - Unlock the power of vision" class="h-12" />
+    </a>
+  </header>
+
+  <main class="mx-auto max-w-3xl px-6 py-12">
+    <h1 class="font-display text-3xl font-extrabold tracking-tight md:text-4xl">Join the Waitlist</h1>
+    <p class="mt-2 text-gray-700">Tell us what you want to build, and we'll notify you when early access opens.</p>
+
+    <!-- Netlify-compatible; swap or add your own action later -->
+    <form name="waitlist" method="POST" data-netlify="true" class="mt-8 space-y-6" aria-label="Binaai waitlist form">
+      <input type="hidden" name="form-name" value="waitlist" />
+
+      <div>
+        <label for="idea" class="block text-sm font-medium text-gray-900">What application do you want to build with Binaai?</label>
+        <textarea id="idea" name="idea" required rows="5" class="mt-2 w-full rounded-2xl border border-gray-300 p-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-sky" placeholder="e.g., Detect unusual movement in store cameras and alert staff"></textarea>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-900">Name</label>
+          <input id="name" name="name" type="text" required class="mt-2 w-full rounded-2xl border border-gray-300 p-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-sky" placeholder="Your full name" />
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-900">Email</label>
+          <input id="email" name="email" type="email" required class="mt-2 w-full rounded-2xl border border-gray-300 p-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-sky" placeholder="you@example.com" />
+        </div>
+      </div>
+
+      <button type="submit" class="rounded-full bg-brand-sky px-8 py-3 font-semibold text-white shadow hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-brand-teal">Request Early Access</button>
+    </form>
+
+    <p class="mt-6 text-sm text-gray-500">We'll only use your info to contact you about Binaai early access and updates.</p>
+  </main>
+
+  <footer class="border-t">
+    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-8 md:flex-row">
+      <div class="flex items-center gap-2 text-sm text-gray-500">© <span id="year"></span> Binaai</div>
+      <div class="text-xs text-gray-400">Privacy • Terms</div>
+    </div>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

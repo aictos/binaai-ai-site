@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Binaai — Unlock the power of vision</title>
+  <meta name="description" content="Binaai turns prompts into working computer-vision pipelines — no code required." />
+  <link rel="icon" href="assets/Binaai-logo-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Poppins', 'Inter', 'system-ui', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              sky: '#2DAAE1',
+              teal: '#5BC0DE',
+              red: '#E94B35',
+              gold: '#F5A623',
+              orange: '#F8C045',
+              black: '#000000'
+            }
+          },
+          boxShadow: {
+            glow: '0 10px 30px rgba(0,0,0,0.12)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .gradient-hero { background: radial-gradient(1200px 600px at 10% -10%, rgba(233,75,53,0.18), transparent 60%), radial-gradient(800px 400px at 90% 0%, rgba(245,166,35,0.18), transparent 60%), linear-gradient(135deg, #2DAAE1 0%, #5BC0DE 60%); }
+    .ring-accent { box-shadow: 0 0 0 12px rgba(233,75,53,0.18), 0 0 0 24px rgba(245,166,35,0.14); }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+  <!-- Header -->
+  <header class="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5">
+    <a href="index.html" class="flex items-center" aria-label="Binaai home">
+      <img src="assets/Binaai-logo-horizontal-tagline.png" alt="Binaai - Unlock the power of vision" class="h-12" />
+    </a>
+    <nav class="hidden items-center gap-6 md:flex">
+      <a href="#problem" class="text-sm hover:underline">Problem</a>
+      <a href="#benefits" class="text-sm hover:underline">Benefits</a>
+      <a href="intake.html" class="rounded-full border border-brand-sky px-4 py-2 text-sm text-brand-sky hover:bg-brand-sky hover:text-white transition">Join Waitlist</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="gradient-hero relative overflow-hidden">
+      <div class="mx-auto flex w-full max-w-7xl items-center justify-center px-6 pb-24 pt-14">
+        <div class="text-center">
+          <h1 class="font-display text-4xl font-extrabold tracking-tight text-white drop-shadow-md md:text-6xl">Build Vision AI Apps <span class="block">with Just a Prompt</span></h1>
+          <p class="mt-4 max-w-2xl mx-auto text-lg text-white/90">From object detection to pose estimation, Binaai turns your ideas into working computer-vision pipelines — no code required.</p>
+          <div class="mt-8 flex flex-wrap justify-center gap-3">
+            <a href="intake.html" class="rounded-full bg-white px-6 py-3 font-semibold text-brand-black shadow-glow hover:opacity-90" aria-label="Join the waitlist">Join the Waitlist</a>
+            <a href="#benefits" class="rounded-full bg-white/10 px-6 py-3 font-medium text-white ring-1 ring-white/40 backdrop-blur hover:bg-white/20">See how it helps</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- PROBLEM -->
+<section id="problem" class="bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-16">
+        <p class="text-sm font-medium text-[#2DAAE1]">Why it’s hard today</p>
+        <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">
+            Computer vision is powerful, but…
+        </h2>
+
+        <div class="mt-10 grid gap-5 md:grid-cols-2">
+            <!-- Card 1 -->
+            <article
+                class="group relative isolate flex items-start gap-4 rounded-2xl border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#E94B35]/10 ring-8 ring-[#E94B35]/5"
+                    aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#E94B35]" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path d="M12 20v-6M8 20v-2M16 20v-10M4 20v-4M20 20V8" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold">Steep learning curve</h3>
+                    <p class="mt-1 text-gray-700">
+                        Advanced ML/AI coding is required just to get started.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article
+                class="group relative isolate flex items-start gap-4 rounded-2xl border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F5A623]/10 ring-8 ring-[#F5A623]/5"
+                    aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#F5A623]" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path d="M12 8v4l3 3M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10Z" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold">Slow prototyping</h3>
+                    <p class="mt-1 text-gray-700">
+                        Simple ideas can take weeks before you see anything running.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article
+                class="group relative isolate flex items-start gap-4 rounded-2xl border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#2DAAE1]/10 ring-8 ring-[#2DAAE1]/5"
+                    aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#2DAAE1]" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path d="M21 12.79A9 9 0 1 1 11 3" stroke-linecap="round" />
+                        <path d="M21 3 12 12" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold">High experiment cost</h3>
+                    <p class="mt-1 text-gray-700">
+                        Switching models and tools burns time, credits, and cloud budget.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Card 4 -->
+            <article
+                class="group relative isolate flex items-start gap-4 rounded-2xl border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#5BC0DE]/10 ring-8 ring-[#5BC0DE]/5"
+                    aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#5BC0DE]" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
+                        <path d="M8 7v10M16 7v10" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold">Fragmented workflow</h3>
+                    <p class="mt-1 text-gray-700">
+                        Stitching everything together into one pipeline is overwhelming.
+                    </p>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+    <!-- BENEFITS -->
+    <section id="benefits" class="bg-gray-50">
+      <div class="mx-auto max-w-7xl px-6 py-16">
+        <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">Binaai makes Vision AI simple</h2>
+        <div class="mt-8 grid gap-6 md:grid-cols-3">
+          <div class="rounded-2xl border bg-white p-6 shadow-sm">
+            <h3 class="text-lg font-semibold">Prompt → Pipeline</h3>
+            <p class="mt-2 text-gray-700">Describe your idea in plain English. Binaai assembles the pipeline automatically.</p>
+          </div>
+          <div class="rounded-2xl border bg-white p-6 shadow-sm">
+            <h3 class="text-lg font-semibold">No-code, modular UI</h3>
+            <p class="mt-2 text-gray-700">Tweak nodes, swap models, and adjust settings visually.</p>
+          </div>
+          <div class="rounded-2xl border bg-white p-6 shadow-sm">
+            <h3 class="text-lg font-semibold">Deploy or prototype fast</h3>
+            <p class="mt-2 text-gray-700">Preview in minutes, share as a mini-app, or extend toward production.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="border-t bg-brand-black text-white">
+      <div class="mx-auto max-w-3xl px-6 py-16 text-center">
+        <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">Be the first to build with vibe coding for Vision AI</h2>
+        <p class="mx-auto mt-3 max-w-2xl text-white/80">Early access is limited. Join the waitlist to help shape Binaai's roadmap.</p>
+        <a href="intake.html" class="mt-8 inline-block rounded-full bg-white px-8 py-3 font-semibold text-brand-black shadow-glow hover:opacity-90">Join Waitlist</a>
+        <div class="mt-8 text-sm text-white/60">Binaai — <em>Unlock the power of vision</em></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t">
+    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-8 md:flex-row">
+      <div class="flex items-center gap-2 text-sm text-gray-500">© <span id="year"></span> Binaai</div>
+      <div class="text-xs text-gray-400">Privacy • Terms</div>
+    </div>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
