@@ -132,17 +132,21 @@
                 it happen.
             </p>
 
-            <!-- CTA Buttons -->
-            <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
-                <button onclick="scrollToWaitlist()"
-                    class="bg-sky-blue hover:bg-teal-blue text-white px-8 py-4 rounded-xl font-poppins font-semibold text-lg transition-all transform hover:scale-105 shadow-lg">
-                    Get Early Access
-                </button>
-                <button
-                    class="border-2 border-sky-blue text-sky-blue hover:bg-sky-blue hover:text-white px-8 py-4 rounded-xl font-poppins font-semibold text-lg transition-all">
-                    Watch Demo
-                </button>
-            </div>
+            <!-- CTA: Idea capture form -->
+            <form action="intake.html" method="GET" class="mx-auto mt-8 flex w-full max-w-2xl flex-col gap-3 md:flex-row md:items-center md:gap-4">
+              <label for="idea" class="sr-only">What application do you want to build with Binaai?</label>
+              <input
+                type="text"
+                id="idea"
+                name="idea"
+                required
+                class="w-full rounded-xl border-2 border-gray-200 px-5 py-4 font-inter text-black placeholder-gray-500 focus:border-sky-blue focus:ring-2 focus:ring-sky-blue/20"
+                placeholder="What application do you want to build with Binaai?"
+              />
+              <button type="submit" class="rounded-xl bg-sky-blue px-8 py-4 font-poppins text-lg font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-teal-blue">
+                Build
+              </button>
+            </form>
         </div>
     </section>
 

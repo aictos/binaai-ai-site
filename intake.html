@@ -70,6 +70,17 @@
             }
         }
     </style>
+    <script>
+      // Pre-populate textarea *placeholder* from index.html idea field (if provided)
+      document.addEventListener('DOMContentLoaded', function () {
+        var params = new URLSearchParams(window.location.search);
+        var ideaHint = params.get('idea');
+        var ideaEl = document.getElementById('idea');
+        if (ideaHint && ideaEl) {
+          ideaEl.placeholder = ideaHint;
+        }
+      });
+    </script>
 </head>
 <body class="font-inter bg-white text-black overflow-x-hidden">
     <!-- Header -->
@@ -110,6 +121,7 @@
 
             <!-- Waitlist Form -->
             <div class="max-w-2xl mx-auto">
+                <!-- All fields remain required: idea, name, email -->
                 <form name="waitlist" method="POST" data-netlify="true" class="space-y-6" aria-label="Binaai waitlist form" onsubmit="handleWaitlistSubmit(event)">
                     <input type="hidden" name="form-name" value="waitlist" />
 
