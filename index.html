@@ -1,201 +1,438 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Binaai — Unlock the power of vision</title>
-  <meta name="description" content="Binaai turns prompts into working computer-vision pipelines — no code required." />
-  <link rel="icon" href="assets/Binaai-logo-icon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            display: ['Poppins', 'Inter', 'system-ui', 'sans-serif']
-          },
-          colors: {
-            brand: {
-              sky: '#2DAAE1',
-              teal: '#5BC0DE',
-              red: '#E94B35',
-              gold: '#F5A623',
-              orange: '#F8C045',
-              black: '#000000'
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binaai - Unlock the Power of Vision</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'red-orange': '#E94B35',
+                        'golden-yellow': '#F5A623',
+                        'orange-yellow': '#F8C045',
+                        'sky-blue': '#2DAAE1',
+                        'teal-blue': '#5BC0DE',
+                    }
+                }
             }
-          },
-          boxShadow: {
-            glow: '0 10px 30px rgba(0,0,0,0.12)'
-          }
         }
-      }
-    }
-  </script>
-  <style>
-    .gradient-hero { background: radial-gradient(1200px 600px at 10% -10%, rgba(233,75,53,0.18), transparent 60%), radial-gradient(800px 400px at 90% 0%, rgba(245,166,35,0.18), transparent 60%), linear-gradient(135deg, #2DAAE1 0%, #5BC0DE 60%); }
-    .ring-accent { box-shadow: 0 0 0 12px rgba(233,75,53,0.18), 0 0 0 24px rgba(245,166,35,0.14); }
-  </style>
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #2DAAE1 0%, #5BC0DE 100%);
+        }
+        
+        .eye-gradient {
+            background: linear-gradient(135deg, #F5A623 0%, #E94B35 50%, #5BC0DE 100%);
+        }
+
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Respect user preferences for reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .floating-animation {
+                animation: none !important;
+                transform: translateY(0) !important;
+            }
+            
+            .fade-in {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+                transition: none !important;
+            }
+        }
+    </style>
 </head>
-<body class="bg-white text-gray-900">
-  <!-- Header -->
-  <header class="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5">
-    <a href="index.html" class="flex items-center" aria-label="Binaai home">
-      <img src="assets/Binaai-logo-horizontal-tagline.png" alt="Binaai - Unlock the power of vision" class="h-12" />
-    </a>
-    <nav class="hidden items-center gap-6 md:flex">
-      <a href="#problem" class="text-sm hover:underline">Problem</a>
-      <a href="#benefits" class="text-sm hover:underline">Benefits</a>
-      <a href="intake.html" class="rounded-full border border-brand-sky px-4 py-2 text-sm text-brand-sky hover:bg-brand-sky hover:text-white transition">Join Waitlist</a>
-    </nav>
-  </header>
 
-  <main>
-    <!-- HERO -->
-    <section class="gradient-hero relative overflow-hidden">
-      <div class="mx-auto flex w-full max-w-7xl items-center justify-center px-6 pb-24 pt-14">
-        <div class="text-center">
-          <h1 class="font-display text-4xl font-extrabold tracking-tight text-white drop-shadow-md md:text-6xl">Build Vision AI Apps <span class="block">with Just a Prompt</span></h1>
-          <p class="mt-4 max-w-2xl mx-auto text-lg text-white/90">From object detection to pose estimation, Binaai turns your ideas into working computer-vision pipelines — no code required.</p>
-          <div class="mt-8 flex flex-wrap justify-center gap-3">
-            <a href="intake.html" class="rounded-full bg-white px-6 py-3 font-semibold text-brand-black shadow-glow hover:opacity-90" aria-label="Join the waitlist">Join the Waitlist</a>
-            <a href="#benefits" class="rounded-full bg-white/10 px-6 py-3 font-medium text-white ring-1 ring-white/40 backdrop-blur hover:bg-white/20">See how it helps</a>
-          </div>
+<body class="font-inter bg-white text-black overflow-x-hidden">
+    <!-- Header -->
+    <header class="relative z-50 px-6 py-4 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3">
+                <a href="index.html" class="flex items-center" aria-label="Binaai home">
+                    <img src="assets/Binaai-logo-horizontal-tagline.png" alt="Binaai - Unlock the power of vision" class="h-12" />
+                </a>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#features" class="font-inter text-gray-700 hover:text-sky-blue transition-colors">Features</a>
+                <a href="#how-it-works" class="font-inter text-gray-700 hover:text-sky-blue transition-colors">How it
+                    Works</a>
+                <a href="intake.html" class="font-inter text-gray-700 hover:text-sky-blue transition-colors">Early
+                    Access</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <a href="intake.html"
+                class="bg-sky-blue hover:bg-teal-blue text-white px-6 py-2 rounded-lg font-inter font-medium transition-all transform hover:scale-105 inline-block">
+                Join Waitlist
+            </a>
         </div>
-      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden">
+        <div class="absolute inset-0 gradient-bg opacity-5"></div>
+
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 w-20 h-20 rounded-full bg-golden-yellow/20 floating-animation"></div>
+        <div class="absolute top-40 right-20 w-16 h-16 rounded-full bg-red-orange/20 floating-animation"
+            style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-40 left-20 w-24 h-24 rounded-full bg-teal-blue/20 floating-animation"
+            style="animation-delay: 4s;"></div>
+
+        <div class="max-w-6xl mx-auto text-center fade-in relative z-10">
+            <!-- Main Logo -->
+            <div class="flex justify-center mb-8">
+                <img src="assets/Binaai-logo-icon.png" alt="Binaai logo" class="h-32 w-32 rounded-full">
+            </div>
+
+            <!-- Hero Text -->
+            <h1 class="font-poppins font-bold text-5xl md:text-7xl text-black mb-6 leading-tight">
+                <span class="block">Binaai</span>
+                <span class="block text-transparent bg-clip-text eye-gradient">Vision Made Simple</span>
+            </h1>
+
+            <!-- CTA: Idea capture form -->
+            <form action="intake.html" method="GET" class="space-y-6 font-inter text-xl md:text-2xl text-gray-600 mb-4 max-w-3xl mx-auto leading-relaxed">
+                <input type="hidden" name="form-name" value="ideas-form" />
+                
+                <div>
+                    <label for="idea" class="font-inter text-xl md:text-2xl text-gray-600 mb-4 max-w-3xl mx-auto leading-relaxed">What do you want to build today?</label>
+                    <textarea id="idea" name="idea" required rows="2"
+                        class="w-full px-6 py-4 rounded-xl text-black font-inter placeholder-gray-500 border-2 border-gray-200 focus:border-sky-blue focus:ring-2 focus:ring-sky-blue/20 transition-all"
+                        placeholder="e.g., Tag products from photos, check posture with webcam, try outfit combinations from my photos, or track pets with your camera"></textarea>
+                </div>
+
+                <button type="submit" class="rounded-xl bg-sky-blue px-8 py-4 font-poppins text-lg font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-teal-blue">
+                    Build
+                </button>
+            </form>
+            <p class="font-poppins font-semibold tracking-wide text-sky-blue uppercase text-sm md:text-base mt-4 mb-2 max-w-3xl mx-auto leading-relaxed">
+                Unlock the power of vision
+            </p>
+            
+            <p class="font-inter text-lg md:text-xl text-gray-600 mt-4 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Build powerful computer vision workflows and applications using simple natural language prompts.
+                No coding required, no technical expertise needed, just describe what you want to see, and Binaai makes
+                it happen.
+            </p>
+        </div>
     </section>
 
-<!-- PROBLEM -->
-<section id="problem" class="bg-white">
-    <div class="mx-auto max-w-7xl px-6 py-16">
-        <p class="text-sm font-medium text-[#2DAAE1]">Why it’s hard today</p>
-        <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">
-            Computer vision is powerful, but…
-        </h2>
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-6 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-poppins font-bold text-4xl md:text-5xl text-black mb-6">
+                    Computer Vision for <span class="text-sky-blue">Everyone</span>
+                </h2>
+                <p class="font-inter text-xl text-gray-600 max-w-3xl mx-auto">
+                    Transform the way you see and interact with visual data through the power of AI
+                </p>
+            </div>
 
-        <div class="mt-10 grid gap-5 md:grid-cols-2">
-            <!-- Card 1 -->
-            <article
-                class="group relative isolate flex items-start gap-4 rounded-2xl border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#E94B35]/10 ring-8 ring-[#E94B35]/5"
-                    aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#E94B35]" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                        <path d="M12 20v-6M8 20v-2M16 20v-10M4 20v-4M20 20V8" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold">Steep learning curve</h3>
-                    <p class="mt-1 text-gray-700">
-                        Advanced ML/AI coding is required just to get started.
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="w-16 h-16 rounded-full bg-golden-yellow/20 flex items-center justify-center mb-6">
+                        <div class="w-8 h-8 rounded-full bg-golden-yellow"></div>
+                    </div>
+                    <h3 class="font-poppins font-semibold text-xl text-black mb-4">Natural Language Processing</h3>
+                    <p class="font-inter text-gray-600 leading-relaxed">
+                        Simply describe what you want to detect, analyze, or create in plain English. Our AI translates
+                        your words into powerful computer vision workflows.
                     </p>
                 </div>
-            </article>
 
-            <!-- Card 2 -->
-            <article
-                class="group relative isolate flex items-start gap-4 rounded-2xl border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F5A623]/10 ring-8 ring-[#F5A623]/5"
-                    aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#F5A623]" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                        <path d="M12 8v4l3 3M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10Z" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold">Slow prototyping</h3>
-                    <p class="mt-1 text-gray-700">
-                        Simple ideas can take weeks before you see anything running.
+                <!-- Feature 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="w-16 h-16 rounded-full bg-red-orange/20 flex items-center justify-center mb-6">
+                        <div class="w-8 h-8 rounded-full bg-red-orange"></div>
+                    </div>
+                    <h3 class="font-poppins font-semibold text-xl text-black mb-4">No-Code Creation</h3>
+                    <p class="font-inter text-gray-600 leading-relaxed">
+                        Build sophisticated computer vision applications without writing a single line of code. Perfect
+                        for designers, marketers, and business professionals.
                     </p>
                 </div>
-            </article>
 
-            <!-- Card 3 -->
-            <article
-                class="group relative isolate flex items-start gap-4 rounded-2xl border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#2DAAE1]/10 ring-8 ring-[#2DAAE1]/5"
-                    aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#2DAAE1]" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                        <path d="M21 12.79A9 9 0 1 1 11 3" stroke-linecap="round" />
-                        <path d="M21 3 12 12" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold">High experiment cost</h3>
-                    <p class="mt-1 text-gray-700">
-                        Switching models and tools burns time, credits, and cloud budget.
+                <!-- Feature 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="w-16 h-16 rounded-full bg-teal-blue/20 flex items-center justify-center mb-6">
+                        <div class="w-8 h-8 rounded-full bg-teal-blue"></div>
+                    </div>
+                    <h3 class="font-poppins font-semibold text-xl text-black mb-4">Instant Deployment</h3>
+                    <p class="font-inter text-gray-600 leading-relaxed">
+                        From concept to production in minutes. Deploy your vision workflows instantly and scale them as
+                        your needs grow.
                     </p>
                 </div>
-            </article>
-
-            <!-- Card 4 -->
-            <article
-                class="group relative isolate flex items-start gap-4 rounded-2xl border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#5BC0DE]/10 ring-8 ring-[#5BC0DE]/5"
-                    aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#5BC0DE]" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                        <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
-                        <path d="M8 7v10M16 7v10" stroke-linecap="round" />
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold">Fragmented workflow</h3>
-                    <p class="mt-1 text-gray-700">
-                        Stitching everything together into one pipeline is overwhelming.
-                    </p>
-                </div>
-            </article>
+            </div>
         </div>
-    </div>
-</section>
-
-    <!-- BENEFITS -->
-    <section id="benefits" class="bg-gray-50">
-      <div class="mx-auto max-w-7xl px-6 py-16">
-        <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">Binaai makes Vision AI simple</h2>
-        <div class="mt-8 grid gap-6 md:grid-cols-3">
-          <div class="rounded-2xl border bg-white p-6 shadow-sm">
-            <h3 class="text-lg font-semibold">Prompt → Pipeline</h3>
-            <p class="mt-2 text-gray-700">Describe your idea in plain English. Binaai assembles the pipeline automatically.</p>
-          </div>
-          <div class="rounded-2xl border bg-white p-6 shadow-sm">
-            <h3 class="text-lg font-semibold">No-code, modular UI</h3>
-            <p class="mt-2 text-gray-700">Tweak nodes, swap models, and adjust settings visually.</p>
-          </div>
-          <div class="rounded-2xl border bg-white p-6 shadow-sm">
-            <h3 class="text-lg font-semibold">Deploy or prototype fast</h3>
-            <p class="mt-2 text-gray-700">Preview in minutes, share as a mini-app, or extend toward production.</p>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- CTA -->
-    <section class="border-t bg-brand-black text-white">
-      <div class="mx-auto max-w-3xl px-6 py-16 text-center">
-        <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">Be the first to build with vibe coding for Vision AI</h2>
-        <p class="mx-auto mt-3 max-w-2xl text-white/80">Early access is limited. Join the waitlist to help shape Binaai's roadmap.</p>
-        <a href="intake.html" class="mt-8 inline-block rounded-full bg-white px-8 py-3 font-semibold text-brand-black shadow-glow hover:opacity-90">Join Waitlist</a>
-        <div class="mt-8 text-sm text-white/60">Binaai — <em>Unlock the power of vision</em></div>
-      </div>
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-poppins font-bold text-4xl md:text-5xl text-black mb-6">
+                    How Binaai Works
+                </h2>
+                <p class="font-inter text-xl text-gray-600 max-w-3xl mx-auto">
+                    Three simple steps to unlock the power of computer vision
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-12">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div
+                        class="w-20 h-20 rounded-full bg-sky-blue text-white flex items-center justify-center mx-auto mb-6 text-2xl font-poppins font-bold">
+                        1
+                    </div>
+                    <h3 class="font-poppins font-semibold text-xl text-black mb-4">Describe Your Vision</h3>
+                    <p class="font-inter text-gray-600 leading-relaxed">
+                        Tell Binaai what you want to see or analyze using natural language. "Detect faces in photos" or
+                        "Count objects on assembly line" – it's that simple.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center">
+                    <div
+                        class="w-20 h-20 rounded-full bg-golden-yellow text-white flex items-center justify-center mx-auto mb-6 text-2xl font-poppins font-bold">
+                        2
+                    </div>
+                    <h3 class="font-poppins font-semibold text-xl text-black mb-4">AI Builds Your Workflow</h3>
+                    <p class="font-inter text-gray-600 leading-relaxed">
+                        Our advanced AI interprets your request and automatically creates a custom computer vision
+                        workflow tailored to your specific needs.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div
+                        class="w-20 h-20 rounded-full bg-red-orange text-white flex items-center justify-center mx-auto mb-6 text-2xl font-poppins font-bold">
+                        3
+                    </div>
+                    <h3 class="font-poppins font-semibold text-xl text-black mb-4">Deploy & Scale</h3>
+                    <p class="font-inter text-gray-600 leading-relaxed">
+                        Launch your application instantly and watch it work. Scale from prototype to production without
+                        any technical complexity.
+                    </p>
+                </div>
+            </div>
+        </div>
     </section>
-  </main>
 
-  <!-- Footer -->
-  <footer class="border-t">
-    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-8 md:flex-row">
-      <div class="flex items-center gap-2 text-sm text-gray-500">© <span id="year"></span> Binaai</div>
-      <div class="text-xs text-gray-600">
-        <a href="privacy.html" class="hover:underline">Privacy Policy</a> • <a href="terms.html" class="hover:underline">Terms of Use</a>
-      </div>
-    </div>
-  </footer>
+    <!-- Footer -->
+    <footer class="py-12 px-6 bg-black text-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 mb-6 md:mb-0">
+                    <div>
+                        <h3 class="font-poppins font-bold text-lg">Binaai</h3>
+                        <p class="font-inter text-sm text-gray-400">Unlock the power of vision</p>
+                    </div>
+                </div>
 
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+                <!-- Links -->
+                <div class="flex items-center space-x-8">
+                    <a href="privacy.html" class="font-inter text-gray-400 hover:text-white transition-colors">Privacy</a>
+                    <a href="terms.html" class="font-inter text-gray-400 hover:text-white transition-colors">Terms</a>
+                    <a href="mailto:support@binaai.ai" class="font-inter text-gray-400 hover:text-white transition-colors">Contact</a>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="font-inter text-gray-400">
+                    © <span id="year"></span> Binaai. All rights reserved. Built with vision in mind.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Set current year in footer copyright
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+    </script>
+    
+    <!-- Rotating placeholder script for idea textarea -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const textarea = document.getElementById('idea');
+            if (!textarea) return;
+
+            // Ensure it is NOT read-only and NOT disabled
+            textarea.readOnly = false;
+            textarea.disabled = false;
+            textarea.removeAttribute('readonly');
+            textarea.removeAttribute('disabled');
+
+            // Full master list (images, short video, webcam/phone camera use cases)
+            const ideas = [
+                // Daily Life & Home
+                'Detect if refrigerator or oven door is left open',
+                'Alert if mailbox has new mail (photo of inside)',
+                'Check if houseplants look dry or wilting',
+                'Identify groceries from a fridge photo and suggest meals',
+                'Track laundry loads finished (empty vs. full basket)',
+
+                // Fitness & Wellness
+                'Yoga instructor checking if students hold poses correctly',
+                'Track squat or push-up count via webcam',
+                'Parent confirming child is practicing dance steps',
+                'Mirror-coaching posture correction while working',
+                'Record tennis serve form and get stance feedback',
+                'Compare before/after photos of workout progress',
+
+                // Family & Safety
+                'Blur or block faces in daycare videos before sharing',
+                'Detect when a child leaves their seat during homework time',
+                'Spot when someone enters the backyard gate',
+                'Check baby\'s sleeping position in crib photos',
+                'Alert if stove burners are left on (photo recognition)',
+
+                // Events & Social
+                'Count how many people walk into a store from a camera clip',
+                'Estimate audience size in a room photo',
+                'Track audience mood (smiling, engaged, distracted)',
+                'Auto-capture the best smile from multiple group photos',
+                'Detect if everyone is raising their hand at a workshop',
+
+                // Small Business & Work
+                'Auto-tag products in shop photos for inventory',
+                'Identify items missing from store shelf photos',
+                'Count cars in a parking lot',
+                'Track queue length at a register',
+                'Confirm safety gear compliance in site photos',
+                'Identify damaged packages from delivery photos',
+
+                // Creative & Fun
+                'Detect if a Lego/blocks build matches a given design',
+                'Make a time-lapse from daily desk selfies',
+                'Use webcam to trigger music when dancing',
+                'See if a drawing matches a reference photo',
+
+                // Learning & Education
+                'Teacher checking if students raise hands on screen',
+                'Count books on a shelf from a photo',
+                'Spot handwriting issues from notebook page uploads',
+                'Identify science lab safety compliance (goggles, gloves)',
+                'Recognize which musical instrument is being played',
+                'Check if a puzzle or Lego build is complete',
+
+                // Fashion
+                'Try on outfits virtually using mirror + phone camera',
+                'Suggest outfit combinations from closet photos',
+                'Detect clothing types (shirt, jacket, skirt) from photos',
+                'Rate outfit styles with AI feedback',
+                'Check if outfit colors clash or complement',
+                'Identify duplicate clothing items in a wardrobe photo',
+                'Create a style board combining items into a look',
+                'Compare an inspo outfit with what you\'re wearing',
+                'Suggest accessories to complete a look',
+                'Check if clothing fits a dress code (business casual)',
+
+                // Pets & Animals
+                'Detect when pets are near the door to go outside',
+                'Track if pets are on furniture they shouldn\'t be',
+                'Monitor pet activity (eating, playing, resting) from clips',
+                'Spot unusual behavior (limping, excessive scratching)',
+                'Count how many pets appear in a group photo'
+            ];
+
+            let userInteracted = false;
+            let intervalId = null;
+
+            function setRandomPlaceholder() {
+                if (userInteracted) return; // don't override if user started interacting
+                const idea = ideas[Math.floor(Math.random() * ideas.length)];
+                textarea.placeholder = 'e.g., ' + idea;
+            }
+
+            // Initial set + start rotation every 6s
+            setRandomPlaceholder();
+            intervalId = setInterval(setRandomPlaceholder, 6000);
+
+            function stopRotation() {
+                if (userInteracted) return;
+                userInteracted = true;
+                if (intervalId) {
+                    clearInterval(intervalId);
+                    intervalId = null;
+                }
+            }
+
+            // Stop rotating as soon as the user interacts (typing or focusing)
+            textarea.addEventListener('input', stopRotation);
+            textarea.addEventListener('keydown', stopRotation);
+            textarea.addEventListener('focus', stopRotation);
+            
+        });
+    </script>
 </body>
+
 </html>
