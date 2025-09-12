@@ -1,0 +1,55 @@
+{
+  "name": "binaai-backend",
+  "version": "1.0.0",
+  "description": "Backend for Binaai vision AI platform",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "migrate": "node scripts/migrate.js",
+    "lint": "eslint .",
+    "format": "prettier -w .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:setup": "node scripts/db-manager.js setup",
+    "db:reset": "node scripts/db-manager.js reset",
+    "db:health": "node scripts/db-manager.js health",
+    "db:create": "node scripts/db-manager.js create",
+    "db:drop": "node scripts/db-manager.js drop",
+    "db:migrate": "node scripts/db-manager.js migrate",
+    "env:generate": "node scripts/generate-env.js",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:build": "docker-compose build",
+    "docker:reset": "docker-compose down -v && docker-compose up -d --build"
+  },
+  "keywords": [
+    "binaai",
+    "vision",
+    "ai",
+    "express",
+    "postgres"
+  ],
+  "author": "Binaai",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "helmet": "^7.0.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.11.3",
+    "pino": "^8.15.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.3.1",
+    "eslint": "^8.48.0",
+    "nodemon": "^3.0.1",
+    "pino-pretty": "^10.2.0",
+    "prettier": "^3.0.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
