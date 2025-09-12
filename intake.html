@@ -72,12 +72,23 @@
     </style>
     <script>
       // Pre-populate textarea *value* from index.html idea field (if provided)
+      // Escape HTML special characters to prevent XSS
+      function escapeHtml(text) {
+        var map = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+      }
       document.addEventListener('DOMContentLoaded', function () {
         var params = new URLSearchParams(window.location.search);
         var ideaHint = params.get('idea');
         var ideaEl = document.getElementById('idea');
         if (ideaHint && ideaEl) {
-          ideaEl.value = ideaHint;
+          ideaEl.value = escapeHtml(ideaHint);
         }
       });
     </script>
