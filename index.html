@@ -110,7 +110,7 @@
         <div class="absolute bottom-40 left-20 w-24 h-24 rounded-full bg-teal-blue/20 floating-animation"
             style="animation-delay: 4s;"></div>
 
-        <div class="max-w-6xl mx-auto text-center fade-in">
+        <div class="max-w-6xl mx-auto text-center fade-in relative z-10">
             <!-- Main Logo -->
             <div class="flex justify-center mb-8">
                 <img src="assets/Binaai-logo-icon.png" alt="Binaai logo" class="h-32 w-32 rounded-full">
@@ -123,30 +123,31 @@
             </h1>
 
             <p class="font-inter text-xl md:text-2xl text-gray-600 mb-4 max-w-3xl mx-auto leading-relaxed">
+                <!-- CTA: Idea capture form -->
+                <form action="intake.html" method="GET" class="space-y-6">
+                    <input type="hidden" name="form-name" value="ideas-form" />
+                    
+                    <div>
+                        <label for="idea" class="font-inter text-xl md:text-2xl text-gray-600 mb-4 max-w-3xl mx-auto leading-relaxed">What do you want to build today?</label>
+                        <textarea id="idea" name="idea" required rows="2"
+                            class="w-full px-6 py-4 rounded-xl text-black font-inter placeholder-gray-500 border-2 border-gray-200 focus:border-sky-blue focus:ring-2 focus:ring-sky-blue/20 transition-all"
+                            placeholder="e.g., Tag products from photos, check posture with webcam, try outfit combinations from my photos, or track pets with your camera"></textarea>
+                    </div>
+
+                <button type="submit" class="rounded-xl bg-sky-blue px-8 py-4 font-poppins text-lg font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-teal-blue">
+                    Build
+                </button>
+                </form>
+            </p>
+            <p class="font-inter text-xl md:text-2xl text-gray-600 mb-4 max-w-3xl mx-auto leading-relaxed">
                 Unlock the power of vision
             </p>
-
+            
             <p class="font-inter text-lg text-gray-500 mb-12 max-w-4xl mx-auto leading-relaxed">
                 Build powerful computer vision workflows and applications using simple natural language prompts.
                 No coding required, no technical expertise needed – just describe what you want to see, and Binaai makes
                 it happen.
             </p>
-
-            <!-- CTA: Idea capture form -->
-            <form action="intake.html" method="GET" class="mx-auto mt-8 flex w-full max-w-2xl flex-col gap-3 md:flex-row md:items-center md:gap-4">
-              <label for="idea" class="sr-only">What application do you want to build with Binaai?</label>
-              <input
-                type="text"
-                id="idea"
-                name="idea"
-                required
-                class="w-full rounded-xl border-2 border-gray-200 px-5 py-4 font-inter text-black placeholder-gray-500 focus:border-sky-blue focus:ring-2 focus:ring-sky-blue/20"
-                placeholder="What application do you want to build with Binaai?"
-              />
-              <button type="submit" class="rounded-xl bg-sky-blue px-8 py-4 font-poppins text-lg font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-teal-blue">
-                Build
-              </button>
-            </form>
         </div>
     </section>
 
@@ -297,6 +298,125 @@
                         block: 'start'
                     });
                 }
+            });
+        });
+    </script>
+    
+    <!-- Rotating placeholder script for idea textarea -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const textarea = document.getElementById('idea');
+            if (!textarea) return;
+
+            // Ensure it is NOT read-only and NOT disabled
+            textarea.readOnly = false;
+            textarea.disabled = false;
+            textarea.removeAttribute('readonly');
+            textarea.removeAttribute('disabled');
+
+            // Full master list (images, short video, webcam/phone camera use cases)
+            const ideas = [
+                // Daily Life & Home
+                'Detect if refrigerator or oven door is left open',
+                'Alert if mailbox has new mail (photo of inside)',
+                'Check if houseplants look dry or wilting',
+                'Identify groceries from a fridge photo and suggest meals',
+                'Track laundry loads finished (empty vs. full basket)',
+
+                // Fitness & Wellness
+                'Yoga instructor checking if students hold poses correctly',
+                'Track squat or push-up count via webcam',
+                'Parent confirming child is practicing dance steps',
+                'Mirror-coaching posture correction while working',
+                'Record tennis serve form and get stance feedback',
+                'Compare before/after photos of workout progress',
+
+                // Family & Safety
+                'Blur or block faces in daycare videos before sharing',
+                'Detect when a child leaves their seat during homework time',
+                'Spot when someone enters the backyard gate',
+                'Check baby\'s sleeping position in crib photos',
+                'Alert if stove burners are left on (photo recognition)',
+
+                // Events & Social
+                'Count how many people walk into a store from a camera clip',
+                'Estimate audience size in a room photo',
+                'Track audience mood (smiling, engaged, distracted)',
+                'Auto-capture the best smile from multiple group photos',
+                'Detect if everyone is raising their hand at a workshop',
+
+                // Small Business & Work
+                'Auto-tag products in shop photos for inventory',
+                'Identify items missing from store shelf photos',
+                'Count cars in a parking lot',
+                'Track queue length at a register',
+                'Confirm safety gear compliance in site photos',
+                'Identify damaged packages from delivery photos',
+
+                // Creative & Fun
+                'Detect if a Lego/blocks build matches a given design',
+                'Make a time-lapse from daily desk selfies',
+                'Use webcam to trigger music when dancing',
+                'See if a drawing matches a reference photo',
+
+                // Learning & Education
+                'Teacher checking if students raise hands on screen',
+                'Count books on a shelf from a photo',
+                'Spot handwriting issues from notebook page uploads',
+                'Identify science lab safety compliance (goggles, gloves)',
+                'Recognize which musical instrument is being played',
+                'Check if a puzzle or Lego build is complete',
+
+                // Fashion
+                'Try on outfits virtually using mirror + phone camera',
+                'Suggest outfit combinations from closet photos',
+                'Detect clothing types (shirt, jacket, skirt) from photos',
+                'Rate outfit styles with AI feedback',
+                'Check if outfit colors clash or complement',
+                'Identify duplicate clothing items in a wardrobe photo',
+                'Create a style board combining items into a look',
+                'Compare an inspo outfit with what you\'re wearing',
+                'Suggest accessories to complete a look',
+                'Check if clothing fits a dress code (business casual)',
+
+                // Pets & Animals
+                'Detect when pets are near the door to go outside',
+                'Track if pets are on furniture they shouldn\'t be',
+                'Monitor pet activity (eating, playing, resting) from clips',
+                'Spot unusual behavior (limping, excessive scratching)',
+                'Count how many pets appear in a group photo'
+            ];
+
+            let userInteracted = false;
+            let intervalId = null;
+
+            function setRandomPlaceholder() {
+                if (userInteracted) return; // don't override if user started interacting
+                const idea = ideas[Math.floor(Math.random() * ideas.length)];
+                textarea.placeholder = 'e.g., ' + idea;
+            }
+
+            // Initial set + start rotation every 6s
+            setRandomPlaceholder();
+            intervalId = setInterval(setRandomPlaceholder, 6000);
+
+            function stopRotation() {
+                if (userInteracted) return;
+                userInteracted = true;
+                if (intervalId) {
+                    clearInterval(intervalId);
+                    intervalId = null;
+                }
+            }
+
+            // Stop rotating as soon as the user interacts (typing or focusing)
+            textarea.addEventListener('input', stopRotation);
+            textarea.addEventListener('keydown', stopRotation);
+            textarea.addEventListener('focus', stopRotation);
+            
+            // Add a click handler to ensure it's focusable
+            textarea.addEventListener('click', function() {
+                textarea.focus();
             });
         });
     </script>

@@ -71,13 +71,13 @@
         }
     </style>
     <script>
-      // Pre-populate textarea *placeholder* from index.html idea field (if provided)
+      // Pre-populate textarea *value* from index.html idea field (if provided)
       document.addEventListener('DOMContentLoaded', function () {
         var params = new URLSearchParams(window.location.search);
         var ideaHint = params.get('idea');
         var ideaEl = document.getElementById('idea');
         if (ideaHint && ideaEl) {
-          ideaEl.placeholder = ideaHint;
+          ideaEl.value = ideaHint;
         }
       });
     </script>
