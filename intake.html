@@ -125,6 +125,24 @@
         }
     </style>
     <script>
+      // UUID management for client tracking
+      function generateUUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          const r = Math.random() * 16 | 0;
+          const v = c == 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+      }
+
+      function getClientId() {
+        let clientId = localStorage.getItem('binaai_uid');
+        if (!clientId) {
+          clientId = generateUUID();
+          localStorage.setItem('binaai_uid', clientId);
+        }
+        return clientId;
+      }
+
       // Pre-populate textarea *value* from index.html idea field (if provided)
       // Escape HTML special characters to prevent XSS
       function escapeHtml(text) {
@@ -137,11 +155,14 @@
         };
         return text.replace(/[&<>"']/g, function(m) { return map[m]; });
       }
+      
       document.addEventListener('DOMContentLoaded', function () {
         var params = new URLSearchParams(window.location.search);
         var ideaHint = params.get('idea');
         var ideaEl = document.getElementById('idea');
-        if (ideaHint && ideaEl) {
+        
+        // Only set value if textarea is empty and we have a hint
+        if (ideaHint && ideaEl && ideaEl.value.trim() === '') {
           ideaEl.value = escapeHtml(ideaHint);
         }
       });
@@ -192,6 +213,8 @@
                 <!-- All fields remain required: idea, name, email -->
                 <form name="waitlist" method="POST" data-netlify="true" class="space-y-6" aria-label="Binaai waitlist form" onsubmit="handleWaitlistSubmit(event)">
                     <input type="hidden" name="form-name" value="waitlist" />
+                    <!-- Honeypot field for spam protection -->
+                    <input type="text" name="website" tabindex="-1" autocomplete="off" style="position: absolute; left: -9999px; opacity: 0;">
 
                     <div>
                         <label for="idea" class="block text-left font-inter font-medium text-gray-900 mb-2">What application do you want to build with Binaai?</label>
@@ -311,6 +334,13 @@
         }
 
         function validateWaitlistForm(form) {
+            // Check honeypot field for spam protection
+            const honeypot = form.querySelector('input[name="website"]');
+            if (honeypot && honeypot.value) {
+                // Silently block spam submissions
+                return false;
+            }
+
             const idea = form.querySelector('#idea').value.trim();
             const name = form.querySelector('#name').value.trim();
             const email = form.querySelector('#email').value.trim();
@@ -350,15 +380,61 @@
             return true;
         }
 
-        function handleWaitlistSubmit(event) {
+        async function handleWaitlistSubmit(event) {
             event.preventDefault();
             
             if (!validateWaitlistForm(event.target)) {
                 return false;
             }
+
+            const form = event.target;
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
             
-            showToast('Thank you for joining our waitlist! We\'ll be in touch soon.', 'success');
-            event.target.reset();
+            // Disable submit button during submission
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+            
+            try {
+                const formData = {
+                    client_id: getClientId(),
+                    idea: form.querySelector('#idea').value.trim(),
+                    name: form.querySelector('#name').value.trim(),
+                    email: form.querySelector('#email').value.trim(),
+                    sourcePath: window.location.pathname
+                };
+
+                const response = await fetch('/api/waitlist', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.status === 429) {
+                    showToast('Too many attempts. Please wait and retry.', 'error');
+                    return;
+                }
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    showToast(errorData.error || 'Something went wrong. Please try again.', 'error');
+                    return;
+                }
+
+                // Success
+                showToast('Thank you for joining our waitlist! We\'ll be in touch soon.', 'success');
+                form.reset();
+                
+            } catch (error) {
+                console.error('Waitlist submission error:', error);
+                showToast('Something went wrong. Please try again.', 'error');
+            } finally {
+                // Re-enable submit button
+                submitButton.disabled = false;
+                submitButton.textContent = originalText;
+            }
         }
 
         // Set current year

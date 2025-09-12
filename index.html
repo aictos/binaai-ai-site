@@ -196,6 +196,8 @@
             <!-- CTA: Idea capture form -->
             <form action="intake.html" method="GET" class="space-y-6 font-inter text-xl md:text-2xl text-gray-600 mb-4 max-w-3xl mx-auto leading-relaxed">
                 <input type="hidden" name="form-name" value="waitlist" />
+                <!-- Honeypot field for spam protection -->
+                <input type="text" name="website" tabindex="-1" autocomplete="off" style="position: absolute; left: -9999px; opacity: 0;">
                 
                 <div class="max-w-3xl mx-auto">
                     <label for="idea" class="font-inter text-xl md:text-2xl text-gray-600 mb-4 leading-relaxed">What do you want to build today?</label>
@@ -409,8 +411,54 @@
             }, 300);
         }
 
+        // UUID management for client tracking
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        function getClientId() {
+            let clientId = localStorage.getItem('binaai_uid');
+            if (!clientId) {
+                clientId = generateUUID();
+                localStorage.setItem('binaai_uid', clientId);
+            }
+            return clientId;
+        }
+
+        // Silent draft save (fire-and-forget)
+        function saveDraftIdea(idea) {
+            const clientId = getClientId();
+            const draftData = {
+                client_id: clientId,
+                idea: idea,
+                sourcePath: window.location.pathname
+            };
+
+            // Fire-and-forget request (no await, no error handling, no UI feedback)
+            fetch('/api/idea-draft', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(draftData)
+            }).catch(() => {
+                // Silently ignore any errors
+            });
+        }
+
         // Hero form validation and submission
         function validateHeroForm(form) {
+            // Check honeypot field for spam protection
+            const honeypot = form.querySelector('input[name="website"]');
+            if (honeypot && honeypot.value) {
+                // Silently block spam submissions
+                return false;
+            }
+
             const ideaInput = form.querySelector('#idea');
             const ideaValue = ideaInput.value.trim();
             
@@ -438,6 +486,10 @@
                         e.preventDefault();
                         return false;
                     }
+                    
+                    // Silent draft save before navigation
+                    const ideaValue = this.querySelector('#idea').value.trim();
+                    saveDraftIdea(ideaValue);
                     
                     // If validation passes, show success message
                     showToast('Great idea! Taking you to the waitlist...', 'info', 2000);
