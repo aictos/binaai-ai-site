@@ -278,7 +278,7 @@
 
             <div class="border-t border-gray-800 mt-8 pt-8 text-center">
                 <p class="font-inter text-gray-400">
-                    © 2025 Binaai. All rights reserved. Built with vision in mind.
+                    © <span id="year"></span> Binaai. All rights reserved. Built with vision in mind.
                 </p>
             </div>
         </div>
@@ -297,6 +297,11 @@
                     });
                 }
             });
+        });
+
+        // Set current year in footer copyright
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('year').textContent = new Date().getFullYear();
         });
     </script>
     
