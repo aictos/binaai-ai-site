@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: binaai-config-development
+  namespace: default
+data:
+  NODE_ENV: "development"
+  PORT: "3000"
+  LOG_LEVEL: "debug"
+  RATE_LIMIT_WINDOW_MS: "900000"
+  RATE_LIMIT_MAX_REQUESTS: "100"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: binaai-secrets-development
+  namespace: default
+type: Opaque
+data:
+  DATABASE_URL: cG9zdGdyZXM6Ly9wb3N0Z3Jlczpwb3N0Z3Jlc0Bsb2NhbGhvc3Q6NTQzMi9iaW5hYWlfZGV2
+  DB_PASSWORD: eW91ci1zZWN1cmUtcGFzc3dvcmQ=

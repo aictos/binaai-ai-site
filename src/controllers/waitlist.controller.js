@@ -39,6 +39,21 @@ export async function createDraftIdea(req, res, next) {
       'Draft submission failed'
     );
 
+    // For draft submissions, if it's a database connectivity issue,
+    // we should still return success to avoid blocking the user flow
+    // since drafts are meant to be "fire-and-forget"
+    if (error.status === 503) {
+      logger.warn(
+        {
+          client_id: req.validatedData?.client_id,
+          action: 'draft_submission',
+        },
+        'Database unavailable for draft save, returning success to avoid blocking user'
+      );
+      res.status(204).send();
+      return;
+    }
+
     next(error);
   }
 }

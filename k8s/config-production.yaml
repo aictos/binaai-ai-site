@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: binaai-config-production
+  namespace: default
+data:
+  NODE_ENV: "production"
+  PORT: "3000"
+  LOG_LEVEL: "info"
+  RATE_LIMIT_WINDOW_MS: "900000"
+  RATE_LIMIT_MAX_REQUESTS: "50"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: binaai-secrets-production
+  namespace: default
+type: Opaque
+data:
+  DATABASE_URL: cG9zdGdyZXM6Ly9iaW5hYWlfdXNlcjoke0RCX1BBU1NXT1JEfUAke0RCX0hPU1R9OjU0MzIvYmluYWFpX3Byb2Q=
+  DB_PASSWORD: eW91ci1zZWN1cmUtcGFzc3dvcmQ=

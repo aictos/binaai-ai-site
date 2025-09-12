@@ -148,6 +148,13 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     .finally(() => {
       db.close();
     });
+} else {
+  // If imported as a module, run migrations immediately
+  const runner = new MigrationRunner();
+  runner.runMigrations().catch((error) => {
+    logger.error({ error: error.message }, 'Migration process failed');
+    process.exit(1);
+  });
 }
 
 export default MigrationRunner;

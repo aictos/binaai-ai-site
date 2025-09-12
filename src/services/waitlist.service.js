@@ -48,6 +48,11 @@ export async function upsertDraftSignup(data) {
       'Failed to upsert draft signup'
     );
 
+    // Handle specific database errors
+    if (error.code === 'ECONNREFUSED' || error.code === 'ENOTFOUND') {
+      throw errors.serviceUnavailable('Database is currently unavailable');
+    }
+    
     throw errors.internal('Failed to save draft');
   }
 }
@@ -94,6 +99,11 @@ export async function upsertWaitlistSignup(data) {
       throw errors.conflict('Email address already registered');
     }
 
+    // Handle database connection errors
+    if (error.code === 'ECONNREFUSED' || error.code === 'ENOTFOUND') {
+      throw errors.serviceUnavailable('Database is currently unavailable');
+    }
+
     logger.error(
       {
         client_id,
@@ -124,6 +134,11 @@ export async function getSignupByClientId(client_id) {
 
     return result.rows[0] || null;
   } catch (error) {
+    // Handle database connection errors
+    if (error.code === 'ECONNREFUSED' || error.code === 'ENOTFOUND') {
+      throw errors.serviceUnavailable('Database is currently unavailable');
+    }
+
     logger.error(
       {
         client_id,

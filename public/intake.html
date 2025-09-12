@@ -129,6 +129,7 @@
     <script>
       // UUID management for client tracking
       function generateUUID() {
+        // Generate a proper UUID v4
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
           const r = (Math.random() * 16) | 0;
           const v = c == 'x' ? r : (r & 0x3) | 0x8;
@@ -236,13 +237,10 @@
           <!-- All fields remain required: idea, name, email -->
           <form
             name="waitlist"
-            method="POST"
-            data-netlify="true"
             class="space-y-6"
             aria-label="Binaai waitlist form"
             onsubmit="handleWaitlistSubmit(event)"
           >
-            <input type="hidden" name="form-name" value="waitlist" />
             <!-- Honeypot field for spam protection -->
             <input
               type="text"
@@ -451,8 +449,10 @@
 
       async function handleWaitlistSubmit(event) {
         event.preventDefault();
+        console.log('Form submission started'); // Debug log
 
         if (!validateWaitlistForm(event.target)) {
+          console.log('Form validation failed'); // Debug log
           return false;
         }
 
@@ -465,13 +465,24 @@
         submitButton.textContent = 'Submitting...';
 
         try {
+          const clientId = getClientId();
+          console.log('Generated client_id:', clientId); // Debug log
+          
+          // Validate that client_id was generated
+          if (!clientId) {
+            showToast('There was an issue with your session. Please refresh the page and try again.', 'error');
+            return;
+          }
+          
           const formData = {
-            client_id: getClientId(),
+            client_id: clientId,
             idea: form.querySelector('#idea').value.trim(),
             name: form.querySelector('#name').value.trim(),
             email: form.querySelector('#email').value.trim(),
             sourcePath: window.location.pathname,
           };
+          
+          console.log('Form data being sent:', formData); // Debug log
 
           const response = await fetch('/api/waitlist', {
             method: 'POST',
@@ -488,7 +499,30 @@
 
           if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            showToast(errorData.error || 'Something went wrong. Please try again.', 'error');
+            console.error('API Error:', errorData); // Debug log
+            
+            // Handle specific error cases with user-friendly messages
+            let errorMessage = 'Something went wrong. Please try again.';
+            
+            if (response.status === 400) {
+              if (errorData.error?.includes('client_id')) {
+                errorMessage = 'There was an issue with your session. Please refresh the page and try again.';
+              } else if (errorData.error?.includes('email')) {
+                errorMessage = 'Please enter a valid email address.';
+              } else if (errorData.error?.includes('name')) {
+                errorMessage = 'Please enter your name.';
+              } else if (errorData.error?.includes('idea')) {
+                errorMessage = 'Please describe your app idea.';
+              } else {
+                errorMessage = 'Please check your information and try again.';
+              }
+            } else if (response.status === 503) {
+              errorMessage = 'Our service is temporarily unavailable. Please try again in a few minutes.';
+            } else if (response.status >= 500) {
+              errorMessage = 'Server error. Please try again later.';
+            }
+            
+            showToast(errorMessage, 'error');
             return;
           }
 
@@ -507,6 +541,41 @@
 
       // Set current year
       document.getElementById('year').textContent = new Date().getFullYear();
+      
+      // Add global error handler for debugging
+      window.addEventListener('error', function(event) {
+        console.error('Global JavaScript error:', event.error);
+        showToast('There was a JavaScript error. Please refresh the page and try again.', 'error');
+      });
+      
+      // Add unhandled promise rejection handler
+      window.addEventListener('unhandledrejection', function(event) {
+        console.error('Unhandled promise rejection:', event.reason);
+        showToast('There was an error processing your request. Please try again.', 'error');
+      });
+      
+      // Add form fallback handler in case JavaScript fails
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, setting up form handlers');
+        
+        const form = document.querySelector('form[name="waitlist"]');
+        if (form) {
+          console.log('Form found, setting up handlers');
+          
+          // Add a fallback submit handler
+          form.addEventListener('submit', function(event) {
+            // If we reach here, it means the onsubmit handler didn't work
+            console.error('Form submitted without JavaScript handler - this should not happen');
+            event.preventDefault();
+            showToast('There was an error with the form. Please refresh the page and try again.', 'error');
+          });
+          
+          // Test if the onsubmit handler is working
+          console.log('Form onsubmit handler:', form.onsubmit);
+        } else {
+          console.error('Form not found!');
+        }
+      });
     </script>
   </body>
 </html>

@@ -10,7 +10,19 @@
     "migrate": "node scripts/migrate.js",
     "lint": "eslint .",
     "format": "prettier -w .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:setup": "node scripts/db-manager.js setup",
+    "db:reset": "node scripts/db-manager.js reset",
+    "db:health": "node scripts/db-manager.js health",
+    "db:create": "node scripts/db-manager.js create",
+    "db:drop": "node scripts/db-manager.js drop",
+    "db:migrate": "node scripts/db-manager.js migrate",
+    "env:generate": "node scripts/generate-env.js",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:build": "docker-compose build",
+    "docker:reset": "docker-compose down -v && docker-compose up -d --build"
   },
   "keywords": [
     "binaai",
