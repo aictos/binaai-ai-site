@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Binaai - Unlock the Power of Vision</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              poppins: ['Poppins', 'sans-serif'],
+              inter: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              'red-orange': '#E94B35',
+              'golden-yellow': '#F5A623',
+              'orange-yellow': '#F8C045',
+              'sky-blue': '#2DAAE1',
+              'teal-blue': '#5BC0DE',
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .gradient-bg {
+        background: linear-gradient(135deg, #2daae1 0%, #5bc0de 100%);
+      }
+
+      .eye-gradient {
+        background: linear-gradient(135deg, #f5a623 0%, #e94b35 50%, #5bc0de 100%);
+      }
+
+      .floating-animation {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.8s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Respect user preferences for reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        .floating-animation {
+          animation: none !important;
+          transform: translateY(0) !important;
+        }
+
+        .fade-in {
+          animation: none !important;
+          opacity: 1 !important;
+          transform: translateY(0) !important;
+          transition: none !important;
+        }
+      }
+
+      /* Toast Styles */
+      .toast {
+        min-width: 300px;
+        max-width: 400px;
+        padding: 12px 16px;
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: slideInRight 0.3s ease-out;
+        transition: all 0.3s ease;
+      }
+
+      .toast.removing {
+        animation: slideOutRight 0.3s ease-in;
+      }
+
+      .toast-success {
+        background: linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(22, 163, 74, 0.9));
+        color: white;
+      }
+
+      .toast-error {
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9));
+        color: white;
+      }
+
+      .toast-info {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(37, 99, 235, 0.9));
+        color: white;
+      }
+
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideOutRight {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="font-inter bg-white text-black overflow-x-hidden">
+    <!-- Header -->
+    <header class="relative z-50 px-6 py-4 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <!-- Logo -->
+        <div class="flex items-center space-x-3">
+          <a href="index.html" class="flex items-center" aria-label="Binaai home">
+            <img
+              src="assets/Binaai-logo-horizontal-tagline.png"
+              alt="Binaai - Unlock the power of vision"
+              class="h-12"
+            />
+          </a>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#features" class="font-inter text-gray-700 hover:text-sky-blue transition-colors"
+            >Features</a
+          >
+          <a
+            href="#how-it-works"
+            class="font-inter text-gray-700 hover:text-sky-blue transition-colors"
+            >How it Works</a
+          >
+          <a
+            href="intake.html"
+            class="font-inter text-gray-700 hover:text-sky-blue transition-colors"
+            >Early Access</a
+          >
+        </nav>
+
+        <!-- CTA Button -->
+        <a
+          href="intake.html"
+          class="bg-sky-blue hover:bg-teal-blue text-white px-6 py-2 rounded-lg font-inter font-medium transition-all transform hover:scale-105 inline-block"
+        >
+          Join Waitlist
+        </a>
+      </div>
+    </header>
+
+    <!-- Toast Container -->
+    <div
+      id="toast-container"
+      class="fixed top-4 right-4 z-50 space-y-2"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
+
+    <!-- Hero Section -->
+    <section
+      class="relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden"
+    >
+      <div class="absolute inset-0 gradient-bg opacity-5"></div>
+
+      <!-- Floating Elements -->
+      <div
+        class="absolute top-20 left-10 w-20 h-20 rounded-full bg-golden-yellow/20 floating-animation"
+      ></div>
+      <div
+        class="absolute top-40 right-20 w-16 h-16 rounded-full bg-red-orange/20 floating-animation"
+        style="animation-delay: 2s"
+      ></div>
+      <div
+        class="absolute bottom-40 left-20 w-24 h-24 rounded-full bg-teal-blue/20 floating-animation"
+        style="animation-delay: 4s"
+      ></div>
+
+      <div class="max-w-6xl mx-auto text-center fade-in relative z-10">
+        <!-- Main Logo -->
+        <div class="flex justify-center mb-8">
+          <img src="assets/Binaai-logo-icon.png" alt="Binaai logo" class="h-32 w-32 rounded-full" />
+        </div>
+
+        <!-- Hero Text -->
+        <h1 class="font-poppins font-bold text-5xl md:text-7xl text-black mb-6 leading-tight">
+          <span class="block">Binaai</span>
+          <span class="block text-transparent bg-clip-text eye-gradient">Vision Made Simple</span>
+        </h1>
+
+        <!-- CTA: Idea capture form -->
+        <form
+          action="intake.html"
+          method="GET"
+          class="space-y-6 font-inter text-xl md:text-2xl text-gray-600 mb-4 max-w-3xl mx-auto leading-relaxed"
+        >
+          <input type="hidden" name="form-name" value="waitlist" />
+          <!-- Honeypot field for spam protection -->
+          <input
+            type="text"
+            name="website"
+            tabindex="-1"
+            autocomplete="off"
+            style="position: absolute; left: -9999px; opacity: 0"
+          />
+
+          <div class="max-w-3xl mx-auto">
+            <label
+              for="idea"
+              class="font-inter text-xl md:text-2xl text-gray-600 mb-4 leading-relaxed"
+              >What do you want to build today?</label
+            >
+            <textarea
+              id="idea"
+              name="idea"
+              required
+              rows="2"
+              class="w-full px-6 py-4 rounded-xl text-black font-inter placeholder-gray-500 border-2 border-gray-200 focus:border-sky-blue focus:ring-2 focus:ring-sky-blue/20 transition-all"
+              placeholder="e.g., Tag products from photos, check posture with webcam, try outfit combinations from my photos, or track pets with your camera"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="rounded-xl bg-sky-blue px-8 py-4 font-poppins text-lg font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-teal-blue"
+          >
+            Start Building
+          </button>
+        </form>
+        <p
+          class="font-poppins font-semibold tracking-wide text-sky-blue uppercase text-sm md:text-base mt-4 mb-2 max-w-3xl mx-auto leading-relaxed"
+        >
+          Unlock the power of vision
+        </p>
+
+        <p
+          class="font-inter text-lg md:text-xl text-gray-600 mt-4 mb-10 max-w-2xl mx-auto leading-relaxed"
+        >
+          Build powerful computer vision workflows and applications using simple natural language
+          prompts. No coding required, no technical expertise needed, just describe what you want to
+          see, and Binaai makes it happen.
+        </p>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-6 bg-gray-50">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="font-poppins font-bold text-4xl md:text-5xl text-black mb-6">
+            Computer Vision for <span class="text-sky-blue">Everyone</span>
+          </h2>
+          <p class="font-inter text-xl text-gray-600 max-w-3xl mx-auto">
+            Transform the way you see and interact with visual data through the power of AI
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Feature 1 -->
+          <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+            <div
+              class="w-16 h-16 rounded-full bg-golden-yellow/20 flex items-center justify-center mb-6"
+            >
+              <div class="w-8 h-8 rounded-full bg-golden-yellow"></div>
+            </div>
+            <h3 class="font-poppins font-semibold text-xl text-black mb-4">
+              Natural Language Processing
+            </h3>
+            <p class="font-inter text-gray-600 leading-relaxed">
+              Simply describe what you want to detect, analyze, or create in plain English. Our AI
+              translates your words into powerful computer vision workflows.
+            </p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+            <div
+              class="w-16 h-16 rounded-full bg-red-orange/20 flex items-center justify-center mb-6"
+            >
+              <div class="w-8 h-8 rounded-full bg-red-orange"></div>
+            </div>
+            <h3 class="font-poppins font-semibold text-xl text-black mb-4">No-Code Creation</h3>
+            <p class="font-inter text-gray-600 leading-relaxed">
+              Build sophisticated computer vision applications without writing a single line of
+              code. Perfect for designers, marketers, and business professionals.
+            </p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+            <div
+              class="w-16 h-16 rounded-full bg-teal-blue/20 flex items-center justify-center mb-6"
+            >
+              <div class="w-8 h-8 rounded-full bg-teal-blue"></div>
+            </div>
+            <h3 class="font-poppins font-semibold text-xl text-black mb-4">Instant Deployment</h3>
+            <p class="font-inter text-gray-600 leading-relaxed">
+              From concept to production in minutes. Deploy your vision workflows instantly and
+              scale them as your needs grow.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="font-poppins font-bold text-4xl md:text-5xl text-black mb-6">
+            How Binaai Works
+          </h2>
+          <p class="font-inter text-xl text-gray-600 max-w-3xl mx-auto">
+            Three simple steps to unlock the power of computer vision
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-12">
+          <!-- Step 1 -->
+          <div class="text-center">
+            <div
+              class="w-20 h-20 rounded-full bg-sky-blue text-white flex items-center justify-center mx-auto mb-6 text-2xl font-poppins font-bold"
+            >
+              1
+            </div>
+            <h3 class="font-poppins font-semibold text-xl text-black mb-4">Describe Your Vision</h3>
+            <p class="font-inter text-gray-600 leading-relaxed">
+              Tell Binaai what you want to see or analyze using natural language. "Detect faces in
+              photos" or "Count objects on assembly line" – it's that simple.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="text-center">
+            <div
+              class="w-20 h-20 rounded-full bg-golden-yellow text-white flex items-center justify-center mx-auto mb-6 text-2xl font-poppins font-bold"
+            >
+              2
+            </div>
+            <h3 class="font-poppins font-semibold text-xl text-black mb-4">
+              AI Builds Your Workflow
+            </h3>
+            <p class="font-inter text-gray-600 leading-relaxed">
+              Our advanced AI interprets your request and automatically creates a custom computer
+              vision workflow tailored to your specific needs.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="text-center">
+            <div
+              class="w-20 h-20 rounded-full bg-red-orange text-white flex items-center justify-center mx-auto mb-6 text-2xl font-poppins font-bold"
+            >
+              3
+            </div>
+            <h3 class="font-poppins font-semibold text-xl text-black mb-4">Deploy & Scale</h3>
+            <p class="font-inter text-gray-600 leading-relaxed">
+              Launch your application instantly and watch it work. Scale from prototype to
+              production without any technical complexity.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 bg-black text-white">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center justify-between">
+          <!-- Logo -->
+          <div class="flex items-center space-x-3 mb-6 md:mb-0">
+            <div>
+              <h3 class="font-poppins font-bold text-lg">Binaai</h3>
+              <p class="font-inter text-sm text-gray-400">Unlock the power of vision</p>
+            </div>
+          </div>
+
+          <!-- Links -->
+          <div class="flex items-center space-x-8">
+            <a
+              href="privacy.html"
+              class="font-inter text-gray-400 hover:text-white transition-colors"
+              >Privacy</a
+            >
+            <a href="terms.html" class="font-inter text-gray-400 hover:text-white transition-colors"
+              >Terms</a
+            >
+            <a
+              href="mailto:support@binaai.ai"
+              class="font-inter text-gray-400 hover:text-white transition-colors"
+              >Contact</a
+            >
+          </div>
+        </div>
+
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+          <p class="font-inter text-gray-400">
+            © <span id="year"></span> Binaai. All rights reserved. Built with vision in mind.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Toast System
+      function showToast(message, type = 'info', duration = null) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+
+        // Set default durations
+        const defaultDuration = {
+          success: 4000,
+          error: 8000,
+          info: 6000,
+        };
+
+        const autoDismiss = duration !== null ? duration : defaultDuration[type];
+
+        // Create toast element
+        toast.className = `toast toast-${type}`;
+        toast.setAttribute('role', type === 'error' ? 'alert' : 'status');
+        toast.setAttribute('aria-live', type === 'error' ? 'assertive' : 'polite');
+
+        // Toast content
+        toast.innerHTML = `
+                <div class="flex items-start justify-between">
+                    <div class="flex-1 text-sm font-medium">${message}</div>
+                    <button type="button" class="ml-3 text-white/80 hover:text-white" onclick="removeToast(this.parentElement.parentElement)">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+
+        // Add to container
+        container.appendChild(toast);
+
+        // Auto-dismiss for success and info toasts
+        if (autoDismiss > 0) {
+          setTimeout(() => {
+            removeToast(toast);
+          }, autoDismiss);
+        }
+      }
+
+      function removeToast(toast) {
+        if (!toast || !toast.parentElement) return;
+
+        toast.classList.add('removing');
+        setTimeout(() => {
+          if (toast.parentElement) {
+            toast.parentElement.removeChild(toast);
+          }
+        }, 300);
+      }
+
+      // UUID management for client tracking
+      function generateUUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+          const r = (Math.random() * 16) | 0;
+          const v = c == 'x' ? r : (r & 0x3) | 0x8;
+          return v.toString(16);
+        });
+      }
+
+      function getClientId() {
+        let clientId = localStorage.getItem('binaai_uid');
+        if (!clientId) {
+          clientId = generateUUID();
+          localStorage.setItem('binaai_uid', clientId);
+        }
+        return clientId;
+      }
+
+      // Silent draft save (fire-and-forget)
+      function saveDraftIdea(idea) {
+        const clientId = getClientId();
+        const draftData = {
+          client_id: clientId,
+          idea: idea,
+          sourcePath: window.location.pathname,
+        };
+
+        // Fire-and-forget request (no await, no error handling, no UI feedback)
+        fetch('/api/idea-draft', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(draftData),
+        }).catch(() => {
+          // Silently ignore any errors
+        });
+      }
+
+      // Hero form validation and submission
+      function validateHeroForm(form) {
+        // Check honeypot field for spam protection
+        const honeypot = form.querySelector('input[name="website"]');
+        if (honeypot && honeypot.value) {
+          // Silently block spam submissions
+          return false;
+        }
+
+        const ideaInput = form.querySelector('#idea');
+        const ideaValue = ideaInput.value.trim();
+
+        if (!ideaValue) {
+          showToast('Please describe your app idea before continuing.', 'error');
+          ideaInput.focus();
+          return false;
+        }
+
+        if (ideaValue.length < 10) {
+          showToast('Please provide a more detailed description of your app idea.', 'error');
+          ideaInput.focus();
+          return false;
+        }
+
+        return true;
+      }
+
+      // Add form validation to hero form
+      document.addEventListener('DOMContentLoaded', function () {
+        const heroForm = document.querySelector('form[action="intake.html"]');
+        if (heroForm) {
+          heroForm.addEventListener('submit', function (e) {
+            if (!validateHeroForm(this)) {
+              e.preventDefault();
+              return false;
+            }
+
+            // Silent draft save before navigation
+            const ideaValue = this.querySelector('#idea').value.trim();
+            saveDraftIdea(ideaValue);
+
+            // If validation passes, show success message
+            showToast('Great idea! Taking you to the waitlist...', 'info', 2000);
+          });
+        }
+      });
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          }
+        });
+      });
+
+      // Set current year in footer copyright
+      document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('year').textContent = new Date().getFullYear();
+      });
+    </script>
+
+    <!-- Rotating placeholder script for idea textarea -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const textarea = document.getElementById('idea');
+        if (!textarea) return;
+
+        // Ensure it is NOT read-only and NOT disabled
+        textarea.readOnly = false;
+        textarea.disabled = false;
+        textarea.removeAttribute('readonly');
+        textarea.removeAttribute('disabled');
+
+        // Full master list (images, short video, webcam/phone camera use cases)
+        const ideas = [
+          // Daily Life & Home
+          'Build me something that tells me if my fridge or oven door is left open.',
+          'I want to get an alert if there’s new mail in my mailbox photo.',
+          'Help me check if my plants look dry or wilted.',
+          'Can I have an app that identifies groceries in my fridge photo and suggests meals?',
+          'Make something that tracks laundry loads by spotting if the basket is full or empty.',
+
+          // Fitness & Wellness
+          'I’d like a way to check if yoga students are holding the right poses.',
+          'Give me a tool that counts my squats or push-ups through my webcam.',
+          'I want something that confirms if my kid is practicing dance steps.',
+          'Help me get posture coaching while I’m working at my desk.',
+          'Build me an app that analyzes my tennis serve and gives stance feedback.',
+          'I need something that compares before and after photos to show workout progress.',
+
+          // Family & Safety
+          'Can you make an app that blurs kids’ faces in daycare clips before I share them?',
+          'I want something that alerts me if a child leaves their seat during homework.',
+          'Build me a tool that spots when someone enters my backyard gate.',
+          'Help me check if my baby is sleeping in the right position.',
+          'Give me a way to know if the stove burners are left on.',
+
+          // Events & Social
+          'I want an app that counts how many people walked into my shop from a short video.',
+          'Build me a tool that estimates audience size from a photo.',
+          'Help me track the mood of an audience during a presentation.',
+          'Make something that auto-picks the best smile in a group photo.',
+          'Can I have an app that detects when everyone raises their hand in a workshop?',
+
+          // Small Business & Work
+          'Give me an app that auto-tags products in my store photos for inventory.',
+          'I want a tool that identifies missing items on my shop shelves.',
+          'Build me something that counts cars in my parking lot photo.',
+          'Help me track how long the line is at my register.',
+          'I’d like something that confirms workers are wearing safety gear in photos.',
+          'Make a tool that identifies damaged packages from delivery photos.',
+
+          // Creative & Fun
+          'Can I get an app that checks if a Lego or block build matches a design?',
+          'Build me something that aligns selfies with face detection and makes a time-lapse.',
+          'I want a tool that guesses music style when it sees me dancing.',
+          'Give me an app that checks if my drawing matches a reference photo.',
+
+          // Learning & Education
+          'Help me see if students are raising their hands on screen.',
+          'Build me an app that counts books on a shelf from a photo.',
+          'I want a tool that detects handwriting in notebook pages and flags legibility issues.',
+          'Give me an app that checks if students in a lab are wearing goggles and gloves.',
+          'Can I get something that identifies musical instruments in a photo or clip?',
+          'Build me a tool that checks if a puzzle or Lego build is complete.',
+
+          // Fashion
+          'I want an app that lets me virtually try on outfits using my phone camera.',
+          'Build me something that suggests outfit combinations from my closet photos.',
+          'Help me detect clothing types like shirts, skirts, or jackets in photos.',
+          'Give me an app that identifies outfit pieces and suggests what matches visually.',
+          'Can I have a tool that checks if my outfit colors clash or go well together?',
+          'Make something that spots duplicate clothing items in my wardrobe photos.',
+          'I want an app that creates a style board from different clothing photos.',
+          'Build me a tool that compares my outfit with an inspiration photo.',
+          'Help me get suggestions for accessories to finish an outfit.',
+          'Give me an app that checks if my clothes match a dress code like business casual.',
+
+          // Pets & Animals
+          'I’d love a tool that detects when my pet is waiting by the door.',
+          'Build me an app that tracks if my pets are on furniture they shouldn’t be.',
+          'I want something that monitors if my pet is eating, resting, or playing in short clips.',
+          'Help me spot unusual pet behavior like limping or scratching.',
+          'Give me a tool that counts how many pets appear in a group photo.',
+        ];
+
+        let userInteracted = false;
+        let intervalId = null;
+
+        function setRandomPlaceholder() {
+          if (userInteracted) return; // don't override if user started interacting
+          const idea = ideas[Math.floor(Math.random() * ideas.length)];
+          textarea.placeholder = 'e.g., ' + idea;
+        }
+
+        // Initial set + start rotation every 8s
+        setRandomPlaceholder();
+        intervalId = setInterval(setRandomPlaceholder, 8000);
+
+        function stopRotation() {
+          if (userInteracted) return;
+          userInteracted = true;
+          if (intervalId) {
+            clearInterval(intervalId);
+            intervalId = null;
+          }
+        }
+
+        // Stop rotating as soon as the user interacts (typing or focusing)
+        textarea.addEventListener('input', stopRotation);
+        textarea.addEventListener('keydown', stopRotation);
+        textarea.addEventListener('focus', stopRotation);
+      });
+    </script>
+  </body>
+</html>
