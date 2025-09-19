@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binaai - Coming Soon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'red-orange': '#E94B35',
+                        'golden-yellow': '#F5A623',
+                        'orange-yellow': '#F8C045',
+                        'sky-blue': '#2DAAE1',
+                        'teal-blue': '#5BC0DE',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #2DAAE1 0%, #5BC0DE 100%);
+        }
+        
+        .eye-gradient {
+            background: linear-gradient(135deg, #F5A623 0%, #E94B35 50%, #5BC0DE 100%);
+        }
+
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Respect user preferences for reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .floating-animation {
+                animation: none !important;
+                transform: translateY(0) !important;
+            }
+            
+            .fade-in {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-inter bg-white text-black overflow-x-hidden">
+    <!-- Main Content -->
+    <main class="relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden">
+        <div class="absolute inset-0 gradient-bg opacity-5"></div>
+
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 w-20 h-20 rounded-full bg-golden-yellow/20 floating-animation"></div>
+        <div class="absolute top-40 right-20 w-16 h-16 rounded-full bg-red-orange/20 floating-animation"
+            style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-40 left-20 w-24 h-24 rounded-full bg-teal-blue/20 floating-animation"
+            style="animation-delay: 4s;"></div>
+
+        <div class="max-w-4xl mx-auto text-center fade-in relative z-10">
+            <!-- Logo Icon -->
+            <div class="flex justify-center mb-8">
+                <img src="assets/Binaai-logo-icon.png" alt="Binaai logo" class="h-32 w-32 rounded-full">
+            </div>
+
+            <!-- Binaai Name -->
+            <h1 class="font-poppins font-bold text-6xl md:text-8xl text-black mb-8 leading-tight">
+                Binaai
+            </h1>
+
+            <!-- Coming Soon Text -->
+            <h2 class="font-poppins font-semibold text-3xl md:text-4xl text-gray-600 mb-16">
+                Coming Soon
+            </h2>
+        </div>
+    </main>
+
+    <!-- Copyright Footer -->
+    <footer class="py-8 px-6 bg-white border-t border-gray-100">
+        <div class="max-w-4xl mx-auto text-center">
+            <p class="font-inter text-gray-500">
+                © <span id="year"></span> Binaai. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer copyright
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+
+</html>
